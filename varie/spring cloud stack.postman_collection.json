@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "c51d4617-a6c0-4161-a943-e257bb5c22bb",
+		"name": "spring cloud stack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login direct",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userCredential\":\"admin\",\n\t\"password\": \"admin\",\n\t\"subDepartmentId\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login zuul",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userCredential\":\"admin\",\n\t\"password\": \"admin\",\n\t\"subDepartmentId\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9092/login-service/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"login-service",
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service zuul",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwic2NvcGVzIjoiUk9MRV9VU0VSIiwiaXNzIjoiUW51UWJsUVduOEg5Z2dpd2ZHYkN4cFBBM2dkWTFvQWUiLCJleHAiOjE1ODI1ODQxMDV9.tIj3rWylfOwkMfCRCCVk1SgFgZZqNkDJqNPQvRl3Jfg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9092/micro-service/api/sayHello/pippo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"micro-service",
+						"api",
+						"sayHello",
+						"pippo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service zuul test",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwic2NvcGVzIjoiUk9MRV9VU0VSIiwiaXNzIjoiUW51UWJsUVduOEg5Z2dpd2ZHYkN4cFBBM2dkWTFvQWUiLCJleHAiOjE1ODI1ODcwMDB9.YLIOhNzqA-pGEn017foVEIIUKV_LKpiuz0y2w6rJilM"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9092/micro-service/api/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"micro-service",
+						"api",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service zuul test ext resource",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwic2NvcGVzIjoiUk9MRV9VU0VSIiwiaXNzIjoiUW51UWJsUVduOEg5Z2dpd2ZHYkN4cFBBM2dkWTFvQWUiLCJleHAiOjE1ODI1ODQxMDV9.tIj3rWylfOwkMfCRCCVk1SgFgZZqNkDJqNPQvRl3Jfg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9092/micro-service/api/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"micro-service",
+						"api",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userCredential\":\"admin\",\n\t\"password\": \"admin\",\n\t\"subDepartmentId\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
