@@ -5,6 +5,8 @@ import com.cogent.loginservice.requestDTO.LoginRequestDTO;
 import com.cogent.loginservice.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @Api(value = "This is login controller")
 public class MicroController {
 
+	
+	// Inject which port we were assigned
+	@Value("${server.port}")
+	int port;
+	
+	
     private final LoginService loginService;
 
     public MicroController(LoginService loginService) {
@@ -35,13 +43,13 @@ public class MicroController {
 
     @GetMapping("/test")
     public String test() {
-        return "test done";
+        return "test done: port:"+port;
     }
     
     @GetMapping("/sayHello/{name}")
     public String sayHello(@PathVariable("name") String name) {
 		
-		return "hello!"+name;
+		return "hello!"+name +" server port:" + port;
 		
 	}
     
