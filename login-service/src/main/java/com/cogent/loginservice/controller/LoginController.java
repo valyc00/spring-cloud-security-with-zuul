@@ -32,6 +32,18 @@ public class LoginController {
         System.out.println("token:"+token);
         return ok().body(token);
     }
+    
+    
+    @PostMapping(value = WebResourceKeyConstants.LOGIN_KEYCLOAK)
+    @ApiOperation(value = "This is login api vs keycloak", notes = "Request contains username and password")
+    public ResponseEntity<String> loginUserKeycloak(@RequestBody LoginRequestDTO requestDTO, HttpServletRequest request) {
+    	
+    	
+
+        String token = loginService.loginKeycloak(requestDTO, request);
+        System.out.println("token:"+token);
+        return ok().body(token);
+    }
 
     @GetMapping("/test")
     public String test() {
