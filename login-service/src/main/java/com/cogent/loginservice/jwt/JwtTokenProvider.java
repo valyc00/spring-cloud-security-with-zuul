@@ -1,5 +1,6 @@
 package com.cogent.loginservice.jwt;
 
+import com.cogent.loginservice.requestDTO.UserDTO;
 import com.cogent.loginservice.responseDTO.NetworkResponseDTO;
 import com.cogent.loginservice.service.serviceImpl.LoginServiceImpl;
 import com.cogent.loginservice.utils.NetworkUtils;
@@ -37,7 +38,7 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(jwtProperties.getSecretKey().getBytes());
     }
 
-    public String createTokenWithRoles(String username,String roles, HttpServletRequest request) {
+    public String createTokenWithRoles(UserDTO userDTO, HttpServletRequest request) {
     	LOGGER.debug("vale1");
 //        NetworkResponseDTO network = NetworkUtils.getDeviceAddresses.apply(request);
         LOGGER.debug("vale2");
@@ -50,10 +51,11 @@ public class JwtTokenProvider {
 //		roles2.add("ROLE_ADMIN");
         
         String ret = Jwts.builder()
-                .setSubject(username)
+                .setSubject(userDTO.getUsername())
   //              .claim("mac", network.getMacAddress())
   //              .claim("ip", network.getIpAddress())
-                .claim("scopes", roles)
+                .claim("scopes", userDTO.getRoles())
+                .claim("mail", userDTO.getEmailAddress())
                 .setIssuer(JWT_KEY)
                 .setExpiration(calculateExpirationDate())
                 .signWith(SignatureAlgorithm.HS256, secretKey)

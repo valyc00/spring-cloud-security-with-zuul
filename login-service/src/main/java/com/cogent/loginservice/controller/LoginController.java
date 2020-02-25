@@ -41,7 +41,7 @@ public class LoginController {
     	
 
         String token = loginService.loginKeycloak(requestDTO, request);
-        System.out.println("token:"+token);
+        
         return ok().body(token);
     }
 

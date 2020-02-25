@@ -95,12 +95,19 @@ public class LoginServiceImpl implements LoginService {
 		LOGGER.info("LOGIN PROCESS STARTED ::::");
 		String jwtToken;
 		String roles;
+		
+		UserDTO userDTO = new UserDTO();
+		
 		long startTime = DateUtils.getTimeInMillisecondsFromLocalDate();
 		boolean bret = true;
 
 		if (("admin".equals(requestDTO.getUserCredential()) && ("admin".equals(requestDTO.getPassword())))) {
 
 			roles = "ROLE_SUPER,ROLE_ADMIN";
+			userDTO.setUsername(requestDTO.getUserCredential());
+			userDTO.setRoles(roles);
+			userDTO.setEmailAddress("admin@admin.it");
+			
 
 			// jwtToken =
 			// jwtTokenProvider.createTokenWithRoles(requestDTO.getUserCredential(),roles,
@@ -108,14 +115,18 @@ public class LoginServiceImpl implements LoginService {
 			// System.out.println("jwtoken:"+jwtToken);
 		} else if (("user".equals(requestDTO.getUserCredential()) && ("user".equals(requestDTO.getPassword())))) {
 
-			roles = "ROLE_USER";
+			roles = "ROLE_SUPER,ROLE_ADMIN";
+			userDTO.setUsername(requestDTO.getUserCredential());
+			userDTO.setRoles(roles);
+			userDTO.setEmailAddress("user@user.it");
 
 		} else {
 			throw new UnauthorisedException(IncorrectPasswordAttempts.MESSAGE,
 					IncorrectPasswordAttempts.DEVELOPER_MESSAGE);
 		}
-		jwtToken = jwtTokenProvider.createTokenWithRoles(requestDTO.getUserCredential(), roles, request);
-		System.out.println("jwtoken:" + jwtToken);
+		
+		jwtToken = jwtTokenProvider.createTokenWithRoles(userDTO, request);
+		LOGGER.debug("jwtoken:" + jwtToken);
 
 		return jwtToken;
 	}
@@ -147,19 +158,19 @@ public class LoginServiceImpl implements LoginService {
 		String body = response.getBody();
 		
 
-		System.out.println(body);
+		LOGGER.debug(body);
 
 		try {
 			ObjectNode node = new ObjectMapper().readValue(body, ObjectNode.class);
 
 			if (node.has("access_token")) {
-				System.out.println("access_token: " + node.get("access_token"));
+				LOGGER.debug("access_token: " + node.get("access_token"));
 				String access_token = node.get("access_token").toString();
 				access_token = access_token.replace("\"", "");
 
 				if (validateTokenExt(access_token)) {
 					UserDTO userDTO =  getAuthenticationExt(access_token);
-					jwtToken = jwtTokenProvider.createTokenWithRoles(userDTO.getUsername(),userDTO.getRoles(), request);
+					jwtToken = jwtTokenProvider.createTokenWithRoles(userDTO, request);
 				}
 
 				System.out.println("access_token:" + access_token);
@@ -178,7 +189,7 @@ public class LoginServiceImpl implements LoginService {
 		// jwtToken =
 		// jwtTokenProvider.createTokenWithRoles(requestDTO.getUserCredential(),roles,
 		// request);
-		System.out.println("jwtoken:" + jwtToken);
+		LOGGER.debug("jwtoken:" + jwtToken);
 
 		return jwtToken;
 	}
@@ -215,7 +226,7 @@ public class LoginServiceImpl implements LoginService {
 
 			}
 			
-			System.out.println(roles);
+			LOGGER.debug(roles);
 			
 			userDTO.setUsername(preferred_username);
 			userDTO.setEmailAddress(email);
@@ -248,7 +259,7 @@ public class LoginServiceImpl implements LoginService {
 						.setSigningKey(publicKey) //
 						.parseClaimsJws(accessTokenString) //
 				;
-				System.out.println(claimsJws);
+				
 			} catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchProviderException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

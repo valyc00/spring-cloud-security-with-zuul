@@ -37,6 +37,37 @@
 			"response": []
 		},
 		{
+			"name": "login direct for keycloak",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userCredential\":\"valcifol\",\n\t\"password\": \"Eng1pass%\",\n\t\"subDepartmentId\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9090/api/login-keycloak",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"api",
+						"login-keycloak"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "login zuul",
 			"request": {
 				"method": "POST",
@@ -69,7 +100,39 @@
 			"response": []
 		},
 		{
-			"name": "service zuul",
+			"name": "login zuul keycloak",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userCredential\":\"valcifol\",\n\t\"password\": \"Eng1pass%\",\n\t\"subDepartmentId\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:9092/login-service/api/login-keycloak",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"login-service",
+						"api",
+						"login-keycloak"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service zuul user",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -78,13 +141,12 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
+						"value": "application/json",
+						"type": "text"
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwic2NvcGVzIjoiUk9MRV9VU0VSIiwiaXNzIjoiUW51UWJsUVduOEg5Z2dpd2ZHYkN4cFBBM2dkWTFvQWUiLCJleHAiOjE1ODI1ODQxMDV9.tIj3rWylfOwkMfCRCCVk1SgFgZZqNkDJqNPQvRl3Jfg",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWxjaWZvbCIsInNjb3BlcyI6Im1hbmFnZS1hY2NvdW50ICwgUk9MRV9VU0VSICwgbWFuYWdlLWFjY291bnQtbGlua3MgLCB2aWV3LXByb2ZpbGUgLCAiLCJpc3MiOiJRbnVRYmxRV244SDlnZ2l3ZkdiQ3hwUEEzZ2RZMW9BZSIsImV4cCI6MTU4MjY0MDkzN30.MNn3-C1FLZjeXxHl1CdsWJDvDxfj5XPpLqHZJ74Fnbw",
 						"type": "text"
 					}
 				],
@@ -93,7 +155,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9092/micro-service/api/sayHello/pippo",
+					"raw": "http://localhost:9092/micro-service/api/sayHello/user",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -103,7 +165,47 @@
 						"micro-service",
 						"api",
 						"sayHello",
-						"pippo"
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "service zuul admin",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWxjaWZvbCIsInNjb3BlcyI6Im1hbmFnZS1hY2NvdW50ICwgUk9MRV9VU0VSICwgbWFuYWdlLWFjY291bnQtbGlua3MgLCB2aWV3LXByb2ZpbGUgLCAiLCJpc3MiOiJRbnVRYmxRV244SDlnZ2l3ZkdiQ3hwUEEzZ2RZMW9BZSIsImV4cCI6MTU4MjY0MDkzN30.MNn3-C1FLZjeXxHl1CdsWJDvDxfj5XPpLqHZJ74Fnbw"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:9092/micro-service/api/sayHello/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9092",
+					"path": [
+						"micro-service",
+						"api",
+						"sayHello",
+						"admin"
 					]
 				}
 			},
@@ -134,7 +236,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:9092/micro-service/api/test",
+					"raw": "http://localhost:9092/micro-service/api/test?Authorization=Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWxjaWZvbCIsInNjb3BlcyI6Im1hbmFnZS1hY2NvdW50ICwgUk9MRV9VU0VSICwgbWFuYWdlLWFjY291bnQtbGlua3MgLCB2aWV3LXByb2ZpbGUgLCAiLCJpc3MiOiJRbnVRYmxRV244SDlnZ2l3ZkdiQ3hwUEEzZ2RZMW9BZSIsImV4cCI6MTU4MjYzNTQzNX0._kVUfamBP4D2bB_7NbwMbp6Uq8R6xM1hALDRN0s1DGY",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -144,6 +246,12 @@
 						"micro-service",
 						"api",
 						"test"
+					],
+					"query": [
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ2YWxjaWZvbCIsInNjb3BlcyI6Im1hbmFnZS1hY2NvdW50ICwgUk9MRV9VU0VSICwgbWFuYWdlLWFjY291bnQtbGlua3MgLCB2aWV3LXByb2ZpbGUgLCAiLCJpc3MiOiJRbnVRYmxRV244SDlnZ2l3ZkdiQ3hwUEEzZ2RZMW9BZSIsImV4cCI6MTU4MjYzNTQzNX0._kVUfamBP4D2bB_7NbwMbp6Uq8R6xM1hALDRN0s1DGY"
+						}
 					]
 				}
 			},
