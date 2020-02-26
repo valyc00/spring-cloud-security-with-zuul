@@ -1,0 +1,44 @@
+version: '3'
+services:
+  eureka-server:
+    image: openjdk:8
+    volumes:
+      - ../../eureka-server/target/:/usr/src/myapp 
+      - ../../eureka-server/src/main/resources:/usr/src/myapp/config
+    working_dir: /usr/src/myapp
+    command: java -jar eureka-server-0.0.1-SNAPSHOT.jar
+    
+  auth-service:
+    image: openjdk:8
+    volumes:
+      - ../../auth-service/target/:/usr/src/myapp 
+      - ../../auth-service/src/main/resources:/usr/src/myapp/config
+    working_dir: /usr/src/myapp
+    ports:
+      - "9092:9092"
+    command: java -jar auth-service-0.0.1-SNAPSHOT.jar  
+    depends_on:
+      - eureka-server
+    restart: on-failure  
+    
+  login-service:
+    image: openjdk:8
+    volumes:
+      - ../../login-service/target/:/usr/src/myapp 
+      - ../../login-service/src/main/resources:/usr/src/myapp/config
+    working_dir: /usr/src/myapp
+    command: java -jar login-service-0.0.1-SNAPSHOT.jar 
+    depends_on:
+      - eureka-server
+    restart: on-failure  
+    
+  micro-service:
+    image: openjdk:8
+    volumes:
+      - ../../micro-service/target/:/usr/src/myapp 
+      - ../../micro-service/src/main/resources:/usr/src/myapp/config
+    working_dir: /usr/src/myapp
+    command: java -jar micro-service-0.0.1-SNAPSHOT.jar
+    depends_on:
+      - eureka-server
+    restart: on-failure    
