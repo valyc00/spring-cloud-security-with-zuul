@@ -10,6 +10,8 @@ services:
     
   auth-service:
     image: openjdk:8
+    environment:
+      - EUREKA_SERVER_URL=eureka-server
     volumes:
       - ../../auth-service/target/:/usr/src/myapp 
       - ../../auth-service/src/main/resources:/usr/src/myapp/config
@@ -23,6 +25,8 @@ services:
     
   login-service:
     image: openjdk:8
+    environment:
+      - EUREKA_SERVER_URL=eureka-server
     volumes:
       - ../../login-service/target/:/usr/src/myapp 
       - ../../login-service/src/main/resources:/usr/src/myapp/config
@@ -34,6 +38,8 @@ services:
     
   micro-service:
     image: openjdk:8
+    environment:
+      - EUREKA_SERVER_URL=eureka-server
     volumes:
       - ../../micro-service/target/:/usr/src/myapp 
       - ../../micro-service/src/main/resources:/usr/src/myapp/config
