@@ -6,6 +6,8 @@ services:
       - ../../eureka-server/target/:/usr/src/myapp 
       - ../../eureka-server/src/main/resources:/usr/src/myapp/config
     working_dir: /usr/src/myapp
+    ports:
+      - "8761:8761"
     command: java -jar eureka-server-0.0.1-SNAPSHOT.jar
     
   auth-service:
