@@ -115,7 +115,7 @@ public class LoginServiceImpl implements LoginService {
 			// System.out.println("jwtoken:"+jwtToken);
 		} else if (("user".equals(requestDTO.getUserCredential()) && ("user".equals(requestDTO.getPassword())))) {
 
-			roles = "ROLE_SUPER,ROLE_ADMIN";
+			roles = "ROLE_SUPER,ROLE_USER";
 			userDTO.setUsername(requestDTO.getUserCredential());
 			userDTO.setRoles(roles);
 			userDTO.setEmailAddress("user@user.it");
