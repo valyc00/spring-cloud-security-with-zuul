@@ -1,0 +1,16 @@
+### login
+curl -X POST http://localhost:9092/login-service/api/login -H 'Content-Type: application/json' -d '{"userCredential":"admin","password": "admin","subDepartmentId": 0}'
+
+
+### TOKEN login
+TOKEN=$(curl -X POST http://localhost:9092/login-service/api/login -H 'Content-Type: application/json' -d '{"userCredential":"admin","password": "admin","subDepartmentId": 0}')
+
+
+## SERVICE admin
+curl -X GET 'http://localhost:9092/micro-service/api/sayHello/admin' -H "Authorization: Bearer ${TOKEN}" -H 'Content-Type: application/json'
+
+## SERVICE user
+curl -X GET 'http://localhost:9092/micro-service/api/sayHello/user' -H "Authorization: Bearer ${TOKEN}" -H 'Content-Type: application/json'
+
+### service remapping url internet
+curl -X GET 'http://localhost:9092/test/' -H "Authorization: Bearer ${TOKEN}" -H 'Content-Type: application/json'
