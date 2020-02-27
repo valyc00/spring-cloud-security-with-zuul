@@ -6,6 +6,7 @@ services:
       [
         '-b',
         '0.0.0.0',
+        '-Djboss.socket.binding.port-offset=1000',
       ]
     volumes:
       - ./realm-config:/opt/jboss/keycloak/realm-config
